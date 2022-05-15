@@ -13,6 +13,8 @@ someFunc = do
   putStrLn no1
   putStrLn no2
   putStrLn no3
+  print $ map' (+ 1) [1, 2, 3]
+  print $ map' toUpper "abc"
 
 q :: String
 q = "To be, or not to be: that is the question."
@@ -35,3 +37,9 @@ no3 = unwords $ foldr f [] $ zip [0, 1 ..] $ words q
  where
   f (n, s) acc | even n    = map toLower s : acc
                | otherwise = map toUpper s : acc
+
+map' :: (a -> b) -> [a] -> [b]
+map' f ts = go ts []
+ where
+  go []       acc = reverse acc
+  go (x : xs) acc = go xs $ f x : acc
