@@ -15,6 +15,7 @@ someFunc = do
   putStrLn no3
   print $ map' (+ 1) [1, 2, 3]
   print $ map' toUpper "abc"
+  print $ words' q
 
 q :: String
 q = "To be, or not to be: that is the question."
@@ -43,3 +44,10 @@ map' f ts = go ts []
  where
   go []       acc = reverse acc
   go (x : xs) acc = go xs $ f x : acc
+
+words' :: String -> [String]
+words' s = f' : s'
+ where
+  (f', s') = foldr f ("", []) s
+  f cur (w, acc) | isSpace cur = ("", w : acc)
+                 | otherwise   = (cur : w, acc)
