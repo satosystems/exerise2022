@@ -4,6 +4,7 @@ module Lib
 
 import           Data.Char                      ( isAlphaNum
                                                 , isSpace
+                                                , toLower
                                                 , toUpper
                                                 )
 
@@ -11,6 +12,7 @@ someFunc :: IO ()
 someFunc = do
   putStrLn no1
   putStrLn no2
+  putStrLn no3
 
 q :: String
 q = "To be, or not to be: that is the question."
@@ -27,3 +29,9 @@ no2 = foldr f "" q
     | otherwise = case acc of
       (' ' : cs) -> cur : '\n' : cs
       _          -> cur : '\n' : acc
+
+no3 :: String
+no3 = unwords $ foldr f [] $ zip [0, 1 ..] $ words q
+ where
+  f (n, s) acc | even n    = map toLower s : acc
+               | otherwise = map toUpper s : acc
